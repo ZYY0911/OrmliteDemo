@@ -15,16 +15,16 @@ import java.sql.SQLException;
  * @Login Name win10
  * @Create by 张瀛煜 on 2020/9/11 at 17:25
  */
-public class MyHelper extends OrmLiteSqliteOpenHelper {
-    public MyHelper(Context context) {
-        super(context, "de.db", null, 2);
+public class MyHelperNew extends OrmLiteSqliteOpenHelper {
+    public MyHelperNew(Context context) {
+        super(context, "dy.db", null, 6);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, People.class);
             TableUtils.createTableIfNotExists(connectionSource, News.class);
+            TableUtils.createTable(connectionSource, People.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -34,6 +34,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
+            TableUtils.dropTable(connectionSource, News.class, true);
             TableUtils.dropTable(connectionSource, People.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
